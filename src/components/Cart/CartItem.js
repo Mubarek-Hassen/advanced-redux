@@ -10,8 +10,6 @@ const CartItem = (props) => {
       title,
       id,
       price,
-      // quantity,
-      // total
     }))
   }
   const removeItemHandler =()=>{
