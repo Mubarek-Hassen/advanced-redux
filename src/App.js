@@ -6,6 +6,8 @@ import { Fragment,useEffect } from 'react'
 import { uiActions } from './store/ui-slice'
 import Notification from './components/UI/Notification';
 
+let isInitial = true;
+
 
 function App() {
   const showCart = useSelector(state=>state.ui.cartIsVisible);
@@ -15,30 +17,16 @@ function App() {
 
   useEffect(()=>{
     const sendCartData = async ()=>{
-      dispatch(uiActions.showNotification({
-        status: 'pending',
-        title: 'Sending...',
-        message: 'Sending cart data!'
-      }))
-      const response = await fetch('https://react-redux-27cdb-default-rtdb.firebaseio.com/cart.json', {
-        method: 'PUT',
-        body: JSON.stringify(cart)
-    })
-    if(!response.ok){
-      throw new Error('Sending cart data failed!')
+      
+    };
+    
+    if(isInitial){
+      isInitial = false
+      return;
     }
-    dispatch(uiActions.showNotification({
-      status: 'success',
-      title: 'Success...',
-      message: 'Sent cart data successfullt!'
-      }))
-    } 
+
     sendCartData().catch(error=>{
-      dispatch(uiActions.showNotification({
-        status: 'error',
-        title: 'Error!',
-        message: 'Sending cart data failed!'
-      }))
+
     })
   }, [cart, dispatch])
 
