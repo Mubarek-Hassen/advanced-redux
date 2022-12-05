@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import Notification from './components/UI/Notification';
 import { Fragment,useEffect } from 'react'
 import {fetchCartData, sendCartData} from './store/cart-actions'
-let isInitial = true;
 
+let isInitial = true;
 
 function App() {
   const showCart = useSelector(state=>state.ui.cartIsVisible);
