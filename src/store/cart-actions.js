@@ -1,13 +1,28 @@
 import { uiActions } from "./ui-slice";
+import { cartActions } from "./cart-slice";
 
 export const fetchCartData = () =>{
-  return (dispatch)=>{
+  return async (dispatch)=>{
     const fetchData = async() =>{
       const response = await fetch('https://react-redux-27cdb-default-rtdb.firebaseio.com/cart.json')
-      const data = await response.json()
+
       if(!response.ok){
-        throw new Error
+        throw new Error('Could not fetch cart data!')
       }
+      
+      const data = await response.json()
+      return data
+    }
+
+    try {
+      const cartData = await fetchData()
+      dispatch(cartActions.replaceCart(cartData))
+    } catch (error) {
+      dispatch(uiActions.showNotification({
+        status: 'error',
+        title: 'Error!',
+        message: 'Fetching cart data failed!'
+      }))
     }
   }
 }
